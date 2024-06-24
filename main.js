@@ -5,6 +5,10 @@ leftWristY = 0;
 rightWristX = 0;
 rightWristY = 0;
 
+scoreLeftWrist = 0;
+status1 = "";
+status2 = "";
+
 function preload() {
     song1 = loadSound("Avicii - Levels.mp3");
     song2 = loadSound("Eternxlkz - SLAY! (Official Audio).mp3");
@@ -27,11 +31,31 @@ function modelLoaded() {
 
 function draw() {
     image(video, 0, 0, 600, 500);
+
+    fill('FFD700');
+    stroke('#C0C0C0');
+
+    status1 = song1.isPlaying();
+    status2 = song2.isPlaying();
+
+    if (scoreLeftWrist > 0.2) {
+        circle(leftWristX, leftWristY, 20);
+
+        song2.stop();
+
+        if(status1 == false) {
+            song1.play();
+            document.getElementById('song').innerHTML = "Song playing is Levels by Avicii";
+        }
+    }
+
+
 }
 
 function gotPoses(results) {
     if(results.length > 0) {
         console.log(results);
+        scoreLeftWrist = results[0].pose.keypoints[9].score;
 
         leftWristX = results[0].pose.leftWrist.x;
         leftWristY = results[0].pose.leftWrist.y;
