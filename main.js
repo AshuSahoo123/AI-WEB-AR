@@ -6,6 +6,7 @@ rightWristX = 0;
 rightWristY = 0;
 
 scoreLeftWrist = 0;
+scoreRightWrist = 0;
 status1 = "";
 status2 = "";
 
@@ -49,6 +50,16 @@ function draw() {
         }
     }
 
+    if (scoreRightWrist > 0.2) {
+        circle(rightWristX, rightWristY, 20);
+
+        song1.stop();
+
+        if(status2 == false) {
+            song2.play();
+            document.getElementById('song').innerHTML = "Song playing is Slay by Eternxlkz";
+        }
+    }
 
 }
 
@@ -56,6 +67,7 @@ function gotPoses(results) {
     if(results.length > 0) {
         console.log(results);
         scoreLeftWrist = results[0].pose.keypoints[9].score;
+        scoreRightWrist = results[0].pose.keypoints[10].score;
 
         leftWristX = results[0].pose.leftWrist.x;
         leftWristY = results[0].pose.leftWrist.y;
